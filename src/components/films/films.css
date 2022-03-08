@@ -10,13 +10,31 @@
 
 .movie-img{
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
+   
 }
 .movie-title{
     border-radius: 0px 0px 5px 5px;
     border: 1px solid black;
+    height: 20vh;
+    font-size: 10px;
+    
 }
 .movies{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.rating-score { 	
+    margin: 0 auto; 
+    transform: skewY(45deg);
+    background-color: #13aa52;
+    text-align: center;
+    width: 40px;
+    position: relative;
+    margin-left: 85%;
+    overflow: unset;
 }
