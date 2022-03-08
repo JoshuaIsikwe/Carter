@@ -1,0 +1,22 @@
+.movies-card{
+    border: 1px solid  #13aa52;
+    width: 20%;
+    border-radius: 0px 0px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    height: 45vh;
+    margin: 30px 10px;
+}
+
+.movie-img{
+    height: 100%;
+    object-fit: cover;
+}
+.movie-title{
+    border-radius: 0px 0px 5px 5px;
+    border: 1px solid black;
+}
+.movies{
+    display: flex;
+    flex-wrap: wrap;
+}
