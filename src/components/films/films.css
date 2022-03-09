@@ -8,10 +8,10 @@
     margin: 30px 10px;
 }
 
-.movie-img{
+.movie-card-img{
     height: 100%;
     object-fit: fill;
-   
+
 }
 .movie-title{
     border-radius: 0px 0px 5px 5px;
@@ -39,9 +39,33 @@
     overflow: unset;
 }
 
-
 button{
     margin-top: 20px;
     display: hidden;
     text-align: center;
 }
+
+/*Movie Details page*/
+.movies-details{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.movie-picture{
+    height: 100vh;
+   margin-left: 20px;
+   width: 50vh;
+}
+.movie-picture img{
+    height: 60vh;
+    width: 100%;
+    object-fit: fill;
+
+}
+.movie-info{
+    flex: 2;
+    margin-left: 20px;
+    height: 60vh;
+}
+
