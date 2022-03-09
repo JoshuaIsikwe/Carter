@@ -38,3 +38,10 @@
     margin-left: 85%;
     overflow: unset;
 }
+
+
+button{
+    margin-top: 20px;
+    display: hidden;
+    text-align: center;
+}
