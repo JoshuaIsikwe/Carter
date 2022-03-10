@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import "./films.css"
+import FilmDetails from './FilmDetails';
+import { Link } from 'react-router-dom';
 
 class Films extends Component {
   constructor(props) {
@@ -34,14 +36,16 @@ class Films extends Component {
   }
 
   render() {
+    const state = this.state
     const movies = this.state.movies
     const movieList = movies.map((movie) =>
 
         <div className="movies-card">
-          <img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" />
+          <img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" /> <span>{movie.voter_average}</span>
           
           <div className="movie-title">
-              <h5>{movie.title}</h5>
+              <h5><Link to={`/movies-details/${movie.id}`} >{movie.title}</Link>
+    </h5>
             </div>
       </div>
 );
