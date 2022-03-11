@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import "./films.css"
-import FilmDetails from './FilmDetails';
 import { Link } from 'react-router-dom';
 
 class Films extends Component {
@@ -36,7 +35,7 @@ class Films extends Component {
   }
 
   render() {
-    const state = this.state
+    
     const movies = this.state.movies
     const movieList = movies.map((movie) =>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -8,7 +8,6 @@ const FilmDetails = props => {
 
     let params = useParams();
     console.log(params)
-
 
   return (
       
@@ -20,7 +19,7 @@ const FilmDetails = props => {
                 </div>
                 <div className="movie-info">
                     <div className=''>
-                        <h4>Batman</h4><p>(2006)</p>
+                        <h4>{params.id}</h4><p>(2006)</p>
                         <p>Lorem ipsum dolor sit amet.</p>
                     </div>
                     <div className='rating'>
