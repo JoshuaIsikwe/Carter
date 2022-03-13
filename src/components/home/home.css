@@ -25,12 +25,13 @@ video{
 
 /* CSS */
 .button-37 {
+  text-decoration: none;
   background-color: #13aa52;
   border: 1px solid #13aa52;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
   box-sizing: border-box;
-  color: #fff;
+  color: chartreuse;
   cursor: pointer;
   font-size: 16px;
   font-weight: 400;
@@ -50,6 +51,7 @@ video{
   box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
   transform: translateY(-2px);
   background-color: chartreuse;
+  color: #13aa52;
   border: #13aa52 5px;
 }
 

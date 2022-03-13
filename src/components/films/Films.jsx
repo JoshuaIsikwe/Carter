@@ -40,11 +40,14 @@ class Films extends Component {
     const movieList = movies.map((movie) =>
 
         <div className="movies-card">
-          <img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" /> <span>{movie.voter_average}</span>
-          
+          <div className='image-container'>
+            <img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" />
+            <div className='rating-container'>
+            <span>{movie.vote_average}</span>
+            </div>
+          </div>
           <div className="movie-title">
-              <h5><Link to={`/movies-details/${movie.id}`} >{movie.title}</Link>
-    </h5>
+              <Link className='movie-link' to={`/movies-details/${movie.id}`} >{movie.title}</Link>
             </div>
       </div>
 );

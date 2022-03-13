@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import "./home.css"
 
 export default class Home extends Component {
@@ -21,11 +22,12 @@ export default class Home extends Component {
       <div>
             <div className='home'>
           <div className="home-container">
+            <video  src='./videos/car_video.mp4' autoPlay loop muted></video>
            
             <h1>Welcome to Fantastic Movies</h1>
             <p>We have a wide selection of films to watch</p>
             <div className=''>
-              <button className='button-37'  role="button">Browse Films</button>
+            <Link to="/popular-films" className="button-37">Popular movies</Link>
             </div>
           </div>
         </div>

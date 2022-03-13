@@ -11,8 +11,16 @@ const FilmDetails = () => {
 
     const [movie, setMovie] = useState([]);
 
-    // curl 'https://api.trello.com/1/members/me/boards?key={d9524fcf8892baaafe1c847d46c9886b}&token={f2c645402a38899b07160cb8e4adad79e07e7447a2f7b996a5959207e1e74e80}'
+    const renderGenres = (movie) =>{
+      if (movie && movie.genres.length >0) {
+          return movie.genres.map((genres) =>{
+            return <p key ={genres.id}>{genres.name}</p>
+          })
+          console.log(renderGenres(movie))
+      }
+    }
 
+    // curl 'https://api.trello.com/1/members/me/boards?key={d9524fcf8892baaafe1c847d46c9886b}&token={f2c645402a38899b07160cb8e4adad79e07e7447a2f7b996a5959207e1e74e80}'
     // trello api key - d9524fcf8892baaafe1c847d46c9886b
     // trello account token - f2c645402a38899b07160cb8e4adad79e07e7447a2f7b996a5959207e1e74e80
 
@@ -22,11 +30,10 @@ const FilmDetails = () => {
           // get the data from the api
           const data = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=d4f7b87d7cedfdfbbb297f46aa3e8779&language=en-US`);
           const json = await data.json();
-
           // set state with the result
           setMovie(json);
+          
         } 
-  
         // call the function
         fetchData()
           // make sure to catch any error
@@ -41,13 +48,14 @@ const FilmDetails = () => {
         const handleSubmit= (e) => {
           console.log(surname)
           e.preventDefault();
-        }
-      
-        
-    
 
-  return (
+         
+        }
+
       
+      
+       
+  return (
     <div>
          <div>
                 <div className='movies-details'>
