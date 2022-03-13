@@ -1,28 +1,69 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
+const apiKey = "6eb508bda626ff893db446eff50d0066";
+const apiToken = "ae4a73cb0e40c46f6e642f5f7429394534b35e3b5a4c7c21438e5389eec20497";
+const listId = "5a4b3c4cbe0188ca9c0b2059";
 
-
+const customFieldMap = {
+    firstName: "5ffc223c1b802319cb6192fb",
+    surname: "5ffc224be427094809dd7b7c",
+    email: "5ffc22574a33172aa21ccda1",
+    phoneNumber: "5ffc22612d199f8b0e325ef4",
+    movie: "5ffc672ef7f3ca718a1a9b93",
+};
 
 const FilmDetails = () => {
 
     let params = useParams();
-    console.log(params)
 
     const [movie, setMovie] = useState([]);
 
+    const createTrelloCard = (params) => {
+      fetch(`https://api.trello.com/1/cards?key=${apiKey}&token=${apiToken}`, {
+          "method": "POST",
+          "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+          },
+          "body": JSON.stringify({
+              "name": `${params.firstName} ${params.surname}`,
+              "idList": listId,
+          })
+      })
+      .then(res => res.json()).then(jsonData => {
+          const cardId = jsonData.id;
+          console.log("created card:", cardId);
+          const requests = Object.keys(params).map(key => {
+              return fetch(`https://api.trello.com/1/cards/${cardId}/customField/${customFieldMap[key]}/item?key=${apiKey}&token=${apiToken}`, {
+                  "method": "PUT",
+                  "headers": {
+                      "Accept": "application/json",
+                      "Content-Type": "application/json"
+                  },
+                  "body": JSON.stringify({
+                      "value": {
+                          "text": params[key]
+                      }
+                  })
+              })
+          })
+          Promise.all(requests).then(responses => {
+              console.log(responses);
+          });
+          // indicate to user that submission was successful
+      })
+  }
+
+    //Fetch Genres from Array
     const renderGenres = (movie) =>{
-      if (movie && movie.genres.length >0) {
+      if (movie !== []  && movie.genres.length >0) {
           return movie.genres.map((genres) =>{
             return <p key ={genres.id}>{genres.name}</p>
           })
-          console.log(renderGenres(movie))
+          // console.log(renderGenres(movie))
       }
     }
-
-    // curl 'https://api.trello.com/1/members/me/boards?key={d9524fcf8892baaafe1c847d46c9886b}&token={f2c645402a38899b07160cb8e4adad79e07e7447a2f7b996a5959207e1e74e80}'
-    // trello api key - d9524fcf8892baaafe1c847d46c9886b
-    // trello account token - f2c645402a38899b07160cb8e4adad79e07e7447a2f7b996a5959207e1e74e80
 
     useEffect(() => {
         // declare the async data fetching function
@@ -32,7 +73,6 @@ const FilmDetails = () => {
           const json = await data.json();
           // set state with the result
           setMovie(json);
-          
         } 
         // call the function
         fetchData()
@@ -46,15 +86,16 @@ const FilmDetails = () => {
         const [email, setEmail] = useState();
         const [phoneNumber, setNumber] = useState();
         const handleSubmit= (e) => {
-          console.log(surname)
           e.preventDefault();
-
-         
+          createTrelloCard({
+            firstName: firstName,
+            surname: surname,
+            email: email,
+            phoneNumber: phoneNumber,
+            movie: movie.original_title,
+          })
         }
 
-      
-      
-       
   return (
     <div>
          <div>
@@ -69,7 +110,7 @@ const FilmDetails = () => {
                         <p>{movie.tagline}</p>
                     </div>
                     <div className='rating'>
-                        <h3>{movie.vote_average}</h3>
+                        <h3>Rating:{movie.vote_average}</h3>
                     </div>
                     <div>
                         <h4>Overview</h4>
