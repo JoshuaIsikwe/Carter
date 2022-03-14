@@ -1,13 +1,18 @@
 import React from 'react'
+import "../films/films.css"
 
 const About = () => {
   return (
     <div className='about'>
       <div className="about-container">
-        <h4>Joshua</h4>
-        <h4>Isikwe</h4>
-        <h4>0949</h4>
-        <h4>Isikwejoshua@gmail.com</h4>
+        <h1>Developer Information</h1>
+        <div className="info-container">
+       <div className='c-info-item'><h5>Name:</h5><h5 className='dets'> Joshua</h5></div>
+        <div className='c-info-item'><h5>Surname:</h5><h5 className='dets'>Isikwe</h5></div>
+        <div className='c-info-item'><h5>Email:</h5><h5 className='dets'>Isikwejoshua@gmail.com</h5></div>
+        <div className='c-info-item'><h5>Phone Number:</h5><h5 className='dets'>+27 74726 1744</h5></div>
+        
+       </div>
       </div>
     </div>
   )

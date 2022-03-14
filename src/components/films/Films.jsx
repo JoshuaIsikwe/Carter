@@ -33,20 +33,34 @@ class Films extends Component {
     const data = await response.json();
     this.setState({movies: data.results, page: 1});
   }
-
+   getSashClass = (vote) => {
+    if (vote === 0) {
+        return "ribbon-grey"
+    }
+    if (vote < 50) {
+        return "ribbon-red"
+    }
+    if (vote >= 50 && vote < 70) {
+        return "ribbon-yellow"
+    }
+    if (vote >= 70) {
+        return "ribbon-green"
+    }
+}
   render() {
+    
     
     const movies = this.state.movies
     const movieList = movies.map((movie) =>
 
         <div className="movies-card">
-          <div className='image-container'>
-          <Link className='movie-link' to={`/movies-details/${movie.id}`} ><img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" /></Link>
-            <div className='rating-container'>
-            <span>{movie.vote_average}</span>
+            <div className='image-container'>
+                <Link className='movie-link' to={`/movies-details/${movie.id}`} ><img className='movie-card-img' src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="" /></Link>
+              <div className='rating-container'>
+                  <div className={`ribbon ribbon-top-right ${this.getSashClass(movie.vote_average * 10)}`}><span>{movie.vote_average}</span></div>
+              </div>
             </div>
-          </div>
-          <div className="movie-title">
+           <div className="movie-title">
               <Link className='movie-link' to={`/movies-details/${movie.id}`} >{movie.title}</Link>
             </div>
       </div>

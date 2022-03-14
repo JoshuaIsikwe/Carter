@@ -4,6 +4,7 @@ import About from './components/about/About';
 import FilmDetails from './components/films/FilmDetails';
 import Films from './components/films/Films';
 import Home from './components/home/Home';
+import Footer from './components/navbar/Footer';
 import Navbar from './components/navbar/Navbar';
 
 
@@ -18,6 +19,7 @@ function App() {
             <Route path='/about' element={<About/>}></Route>
             <Route path='/movies-details/:id' element={<FilmDetails/>}></Route>
           </Routes>
+          <Footer/>
       </Router>
   );
 }

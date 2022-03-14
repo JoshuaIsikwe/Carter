@@ -24,9 +24,9 @@ export default class Home extends Component {
           <div className="home-container">
             <video  src='./videos/car_video.mp4' autoPlay loop muted></video>
            
+            <div className='welcome-title'>
             <h1>Welcome to Fantastic Movies</h1>
             <p>We have a wide selection of films to watch</p>
-            <div className=''>
             <Link to="/popular-films" className="button-37">Popular movies</Link>
             </div>
           </div>

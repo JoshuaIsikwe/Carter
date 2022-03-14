@@ -13,22 +13,38 @@ const customFieldMap = {
     movie: "5ffc672ef7f3ca718a1a9b93",
 };
 
+
 const FilmDetails = () => {
+
+  const userRating = (vote) => {
+    if (vote === 0) {
+        return "secondary"
+    }
+    if (vote < 50) {
+        return "danger"
+    }
+    if (vote >= 50 && vote < 70) {
+        return "warning"
+    }
+    if (vote >= 70) {
+        return "success"
+    }
+}
 
     let params = useParams();
 
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState(null);
 
     const createTrelloCard = (params) => {
       fetch(`https://api.trello.com/1/cards?key=${apiKey}&token=${apiToken}`, {
-          "method": "POST",
-          "headers": {
-              "Accept": "application/json",
-              "Content-Type": "application/json"
+            "method": "POST",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
           },
           "body": JSON.stringify({
-              "name": `${params.firstName} ${params.surname}`,
-              "idList": listId,
+                "name": `${params.firstName} ${params.surname}`,
+                "idList": listId,
           })
       })
       .then(res => res.json()).then(jsonData => {
@@ -50,18 +66,15 @@ const FilmDetails = () => {
           })
           Promise.all(requests).then(responses => {
               console.log(responses);
+              alert("Submission Successful :)")
           });
-          // indicate to user that submission was successful
       })
   }
 
     //Fetch Genres from Array
-    const renderGenres = (movie) =>{
-      if (movie !== []  && movie.genres.length >0) {
-          return movie.genres.map((genres) =>{
-            return <p key ={genres.id}>{genres.name}</p>
-          })
-          // console.log(renderGenres(movie))
+    const renderGenres = () =>{
+        if (movie !== null) {
+            return movie.genres.map((genre) => genre.name).join(", ")
       }
     }
 
@@ -77,39 +90,43 @@ const FilmDetails = () => {
         // call the function
         fetchData()
           // make sure to catch any error
-          .catch(console.error);;
+            .catch(console.error);;
       }, [])
       
  
-        const [firstName, setFirstName] = useState();
-        const [surname, setSurname] = useState();
-        const [email, setEmail] = useState();
-        const [phoneNumber, setNumber] = useState();
+        const [firstName, setFirstName] = useState("");
+        const [surname, setSurname] = useState("");
+        const [email, setEmail] = useState("");
+        const [phoneNumber, setNumber] = useState("");
         const handleSubmit= (e) => {
-          e.preventDefault();
+            e.preventDefault();
           createTrelloCard({
-            firstName: firstName,
-            surname: surname,
-            email: email,
-            phoneNumber: phoneNumber,
-            movie: movie.original_title,
+              firstName: firstName,
+              surname: surname,
+              email: email,
+              phoneNumber: phoneNumber,
+              movie: movie.original_title,
           })
         }
+        const isFormValid= () => !((firstName === "")  || (surname === "")  || (email === "") || (phoneNumber === ""))
 
+  if(movie===null){
+      return "no movie found"
+  }
+  
   return (
     <div>
          <div>
                 <div className='movies-details'>
-                <div className="movie-picture">
-                    <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}  alt="" />
-                </div>
+                  <div className="movie-picture">
+                      <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}  alt="" />
+                  </div>
                 <div className="movie-info">
                     <div className=''>
-                        
-                        <h4>{movie.original_title}</h4><p>({movie.release_date})</p>
+                        <h4>{movie.original_title} <span className='fs-6 fw-normal'>({movie.release_date.split("-")[0]})</span></h4>
                         <p>{movie.tagline}</p>
                     </div>
-                    <div className='rating'>
+                    <div  className={`h-auto d-inline-block w-25 bg-${userRating(movie.vote_average * 10)}`}>
                         <h3>Rating:{movie.vote_average}</h3>
                     </div>
                     <div>
@@ -117,47 +134,47 @@ const FilmDetails = () => {
                         <p>{movie.overview}</p>
 
                         <h4>Genres</h4>
-                        <p></p>
+                        <p>{renderGenres()}</p>
                     </div>
                 </div>
             </div>
                     
             <div className='form-wrapper'>
-            <form onSubmit={e => { handleSubmit(e) }}>
-        <input 
-        placeholder='First name'
-          name='firstName' 
-          type='text'
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
-        />
-        <input 
-        placeholder='Surname'
-          name='surname' 
-          type='text' 
-          value={surname}
-          onChange={e => setSurname(e.target.value)}
-        />
-        <input
-        placeholder='Email'
-          name='email' 
-          type='text'
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <input
-          placeholder='Phone Number'
-          name='phoneNumber' 
-          type='tel'
-          value={phoneNumber}
-          onChange={e => setNumber(e.target.value)}
-        />
-        <input 
-          type='submit' 
-          value='Get film' 
-        />
-      </form>
-
+              <form onSubmit={e => { handleSubmit(e) }}>
+                  <input 
+                  placeholder='First name'
+                    name='firstName' 
+                    type='text'
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                  />
+                  <input 
+                placeholder='Surname'
+                  name='surname' 
+                  type='text' 
+                  value={surname}
+                  onChange={e => setSurname(e.target.value)}
+                />
+                <input
+                placeholder='Email'
+                  name='email' 
+                  type='text'
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                />
+                <input
+                  placeholder='Phone Number'
+                  name='phoneNumber' 
+                  type='tel'
+                  value={phoneNumber}
+                  onChange={e => setNumber(e.target.value)}
+                />
+                <input 
+                  className={`submit-button ${isFormValid() ? "" : "disabled"}`}
+                  type='submit' 
+                  value='Get film' 
+                />
+            </form>
                 </div>
            </div>
     </div>

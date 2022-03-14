@@ -1,0 +1,10 @@
+.f{
+    padding: 50px;
+    height: 10vh;
+    background-color: #13aa52;
+    color: chartreuse;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    align-items: center;
+}
